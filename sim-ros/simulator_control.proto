@@ -1,0 +1,246 @@
+syntax = "proto3";
+
+package chessbot_simulator_control;
+
+option csharp_namespace = "chessbot-simulator-control";
+
+/*
+This proto file describes communication between Robot Operating System and Simulator
+The communication is currently based on ZeroMQ
+The Simulator's interface is a ZMQ server, the OS's is a ZMQ client
+The OS initiates the communication with a request, and the simulator is responding to it
+*/
+
+// ---NOTE THAT IN PROTO3 EVERY FIELD IS OPTIONAL IN A MESSAGE---
+
+
+//----------------------------
+//--- REQUESTS --- FROM OS
+
+// JOINTS
+
+// Commands the joints to specified angular positions
+message JointPositionGoal {
+  // The position of the joint begins with Joint1 [rad]
+  repeated double position = 1;
+}
+
+// Commands the joints to rotate with specified angular velocity
+message JointVelocityGoal {
+  // The velocity of the joint begins with Joint1 [rad/s]
+  repeated double velocity = 1;
+}
+
+// Commands the joints with specified torques
+message JointTorqueGoal {
+  // The torque of the joint begins with Joint1 [Nm]
+  repeated double torque = 1;
+}
+
+// Commands the specified joint to the specified position
+message JointPositionGoalByAxisId {
+  // The axis_id of the commanded joint
+  int32 axis_id = 1;
+  // The position of the joint [rad]
+  double position = 2;
+}
+
+// Commands the specified joint with the specified velocity
+message JointVelocityGoalByAxisId {
+  // The axis_id of the commanded joint
+  int32 axis_id = 1;
+  // The velocity of the joint [rad/s]
+  double velocity = 2;
+}
+
+// Commands the specified joint with the specified torque
+message JointTorqueGoalByAxisId {
+  // The axis_id of the commanded joint
+  int32 axis_id = 1;
+  // The torque of the joint [Nm]
+  double torque = 2;
+}
+
+// Joint state query with no parameter
+message JointStateRequest {
+
+}
+
+// Joint state query
+message JointStateRequestByAxisId {
+  // The axis_id of the joint
+  int32 axis_id = 1;
+}
+
+// GRIPPER
+
+// Command the gripper to a specified position
+message GripperPositionGoal {
+  // The position of the gripper [rad]
+  double position = 1;
+}
+
+// Query the gripper state
+message GripperStateRequest {
+
+}
+
+
+
+// MISC
+
+// Robot parameter query with no parameter
+message RobotParameterRequest {
+
+}
+
+
+// The message request
+message Request {
+  // each field is optional
+  enum MessageType {
+    // Unkown message type
+    UNSPECIFIED = 0;
+
+    // --------------- JOINTS --------------------
+    // The position setter msg type
+    SET_JOINT_POSITION = 1;
+    // The velocity setter msg type
+    SET_JOINT_VELOCITY = 2;
+    // The torque setter msg type
+    SET_JOINT_TORQUE = 3;
+    // The position setter msg type by axis_id
+    SET_JOINT_POSITION_BY_AXIS_ID = 4;
+    // The velocity setter msg type by axis_id
+    SET_JOINT_VELOCITY_BY_AXIS_ID = 5;
+    // The torque setter msg type by axis_id
+    SET_JOINT_TORQUE_BY_AXIS_ID = 6;
+
+    // The state getter msg type
+    GET_JOINT_STATE = 7;
+    // The state getter msg type by axis_id
+    GET_JOINT_STATE_BY_AXIS_ID = 8;
+
+    // --------------- GRIPPER --------------------
+    // The gripper position setter msg type
+    SET_GRIPPER_POSITION = 9;
+    // The gripper position getter msg type
+    GET_GRIPPER_STATE = 10;
+
+    // --------------- MISC --------------------
+    // The robotparameter type
+    GET_ROBOT_PARAMETER = 11;
+  }
+  // The message type
+  MessageType type = 1;
+  // The joint position goal
+  JointPositionGoal set_joint_position = 2;
+  // The velocity goal
+  JointVelocityGoal set_joint_velocity = 3;
+  // The torque goal
+  JointTorqueGoal set_joint_torque = 4;
+  // The joint position goal of a specified joint
+  JointPositionGoalByAxisId set_joint_position_by_axis_id = 5;
+  // The velocity goal of a specified joint
+  JointVelocityGoalByAxisId set_joint_velocity_by_axis_id = 6;
+  // The torque goal of a specified joint
+  JointTorqueGoalByAxisId set_joint_torque_by_axis_id = 7;
+  // The joint state request
+  JointStateRequest get_joint_state = 8;
+  // The joint state request by axis_id
+  JointStateRequestByAxisId get_joint_state_by_axis_id = 9;
+  // The gripper position goal
+  GripperPositionGoal set_gripper_position = 10;
+  // The gripper state request
+  GripperStateRequest get_gripper_state = 11;
+
+  // The robot parameter request
+  RobotParameterRequest robot_parameter_get = 12;
+}
+
+//----------------------------
+//--- RESPONSES --- FROM SIMULATOR
+
+// The position limit msg [rad] if rotational, [m] if translational
+message JointPositionLimit { 
+  // The upper bound of the position limit
+  double upper_limit = 1;
+  // The lower bound of the position limit
+  double lower_limit = 2;
+}
+
+// The velocity limit msg [rad/s] if rotational, [m/s] if translational
+message JointVelocityLimit { 
+  // The upper bound of the velocity limit
+  double upper_limit = 1;
+  // The upper bound of the velocity limit
+  double lower_limit = 2;
+}
+
+// The velocity limit msg [Nm] if rotational, [N] if translational
+message JointEffortLimit { 
+  // The upper bound of the effort limit
+  double upper_limit = 1;
+  // The lower bound of the effort limit
+  double lower_limit = 2;
+}
+
+// The joint limit msg
+message JointLimit {
+  // The type of the join
+  enum JointType {
+    // Joint is not explicitly specified.
+    JOINT_TYPE_UNSPECIFIED = 0;
+    // Joint is rotational. The value unit is [rad].
+    ROTATIONAL = 1; 
+    // Joint is translational. The value unit is [m].
+    TRANSLATIONAL = 2; 
+  }
+  // The type of the joint
+  JointType type = 1;
+  // The position limit msg
+  JointPositionLimit position_limit = 2;
+  // The velocity limit msg
+  JointVelocityLimit velocity_limit = 3;
+  // The effort limit msg
+  JointEffortLimit effort_limit = 4;
+}
+
+// The robotparameter msg
+message RobotParameter {
+  // The number of axes, most likely 6 or 7
+  int32 axes_number = 1; 
+  // The joint limit msg
+  repeated JointLimit joint_limit = 2;
+}
+
+// The joint state msg for a single joint
+message JointState {
+  // The joint axis_id
+  int32 axis_id = 1;
+  // The joint position data [rad]
+  double position = 2;
+  // the joint velocity data [rad/s]
+  double velocity = 3;
+  // The joint torque data [Nm]
+  double torque = 4;
+}
+
+// The joint state msg NOTE: might be easier to use repeated doubles for
+// position, velocity and torque
+message JointStates {
+  // The joint state data
+  repeated JointState states = 1;
+}
+
+// The state of the gripper
+message GripperState {
+  // The gripper position data [rad]
+  double position = 1;
+}
+
+// When "server" side gets a request, it should return an acceptance
+message Acknowledge {
+  // The acceptance data, even error or command decline messages could be forwarded here
+  string acknowledge = 1; 
+}

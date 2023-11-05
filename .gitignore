@@ -1,0 +1,9 @@
+**/install/
+**/share/
+**/log/
+**/build/
+__pycache__
+*/protos
+
+**.wbproj
+**.vscode

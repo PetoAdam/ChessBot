@@ -1,0 +1,16 @@
+<library path="chessbot">
+  <class name="chessbot/RobotSystem"
+         type="chessbot::RobotSystem"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Robot hardware plugin for LBR3R760iisy.
+    </description>
+  </class>
+  <class name="chessbot/GripperController"
+         type="chessbot::GripperController"
+         base_class_type="controller_interface::ControllerInterface">
+    <description>
+      Gripper controller plugin for LBR3R760iisy.
+    </description>
+  </class>
+</library>

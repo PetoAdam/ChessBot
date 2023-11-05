@@ -1,0 +1,119 @@
+#VRML_SIM R2022b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "../protos/LBR3R760iisy.proto"
+
+WorldInfo {
+  basicTimeStep 32
+  CFM 1e-09
+  contactProperties[
+    ContactProperties {
+      material1 "default"
+      material2 "default"
+      coulombFriction 3
+      frictionRotation 0 0
+      rollingFriction 0 0 0
+      bounce 0.5
+      bounceVelocity 0.01
+      forceDependentSlip 0
+      softERP 0.2
+      softCFM 0.001
+      bumpSound "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/sounds/bump.wav"
+      rollSound "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/sounds/roll.wav"
+      slideSound "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/sounds/slide.wav"
+      maxContactJoints 10
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.11998411229019464 0.04547542429176489 0.9917337337125413 2.422534003952345
+  position 5.950623254514047 -5.6289726849411075 2.517866062962543
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+
+RectangleArena {
+  translation 0 0 -0.001
+  floorSize 5 5
+  floorTileSize 1 1
+  floorAppearance Parquetry {
+    type "dark strip"
+    colorOverride 0 0 0
+  }
+  wallHeight 0.01
+}
+
+RectangleArena {
+  translation 0.4 0 0
+  floorSize 0.5 0.5
+  floorTileSize 0.125 0.125
+  floorAppearance Parquetry {
+    type "chequered"
+  }
+  wallHeight 0.01
+}
+
+LBR3R760iisy {
+  translation 0 0 0.2
+}
+SolidBox {
+  translation 0 0 0.1
+  size 0.2 0.2 0.2
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+}
+
+SolidBox {
+  translation 0.43125 0.03125 0.2 
+  size 0.025 0.025 0.025
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+    density 100
+    mass -1
+  }
+  contactMaterial "default"
+}
+
+SolidBox {
+  translation 0.49375 0.03125 0.3 
+  size 0.025 0.025 0.05
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+    density 100
+    mass -1
+  }
+  contactMaterial "default"
+}
+

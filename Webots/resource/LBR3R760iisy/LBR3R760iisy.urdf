@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!-- ============================================================ ARM ============================================================ -->
+<robot name="LBR3R760iisy">
+  <joint name="LBR3R760iisy_BaseJoint" type="fixed">
+    <child link="LBR3R760iisy_FixedBase"/>
+    <parent link="base_link"/>
+  </joint>
+  <joint name="Joint5" type="revolute">
+    <axis xyz="0.0 0.0 1.0"/>
+    <child link="LBR3R760iisy_Link5"/>
+    <limit effort="5.0E2" lower="-1.919862177E0" upper="1.919862177E0" velocity="2.0E0"/>
+    <origin rpy="-1.5707963267948963 0.0 -0.0" xyz="0.0 0.0 -0.3"/>
+    <parent link="LBR3R760iisy_Link4"/>
+  </joint>
+  <joint name="Joint3" type="revolute">
+    <axis xyz="0.0 0.0 1.0"/>
+    <child link="LBR3R760iisy_Link3"/>
+    <limit effort="5.0E2" lower="-2.61799387799E0" upper="2.61799387799E0" velocity="2.0E0"/>
+    <origin rpy="0.0 0.0 -1.5707963267948963" xyz="0.3 0.0 0.0"/>
+    <parent link="LBR3R760iisy_Link2"/>
+  </joint>
+  <joint name="Joint6" type="revolute">
+    <axis xyz="0.0 0.0 1.0"/>
+    <child link="LBR3R760iisy_Link6"/>
+    <limit effort="5.0E2" lower="-3.839724354E0" upper="3.839724354E0" velocity="2.0E0"/>
+    <origin rpy="1.5707963267948963 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="LBR3R760iisy_Link5"/>
+  </joint>
+  <joint name="Joint1" type="revolute">
+    <axis xyz="0.0 0.0 -1.0"/>
+    <child link="LBR3R760iisy_Link1"/>
+    <limit effort="5.0E2" lower="-3.2288591E0" upper="3.2288591E0" velocity="2.0E0"/>
+    <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.1264"/>
+    <parent link="LBR3R760iisy_FixedBase"/>
+  </joint>
+  <joint name="Joint4" type="revolute">
+    <axis xyz="0.0 0.0 1.0"/>
+    <child link="LBR3R760iisy_Link4"/>
+    <limit effort="5.0E2" lower="-3.05432619E0" upper="3.05432619E0" velocity="2.0E0"/>
+    <origin rpy="1.5707963267948963 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="LBR3R760iisy_Link3"/>
+  </joint>
+  <joint name="Joint2" type="revolute">
+    <axis xyz="0.0 0.0 1.0"/>
+    <child link="LBR3R760iisy_Link2"/>
+    <limit effort="5.0E2" lower="-4.0142572796E0" upper="8.726646E-1" velocity="2.0E0"/>
+    <origin rpy="-1.5707963267948963 0.0 -0.0" xyz="0.0 0.0 0.0886"/>
+    <parent link="LBR3R760iisy_Link1"/>
+  </joint>
+  <link name="LBR3R760iisy_Link1">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link1.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00864540353780418" ixy="0.0" ixz="0.0" iyy="0.00573103463618732" iyz="0.0" izz="0.00974792600424334"/>
+      <mass value="3.2492E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link1.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_Link4">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link4.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00244684891934666" ixy="0.0" ixz="0.0" iyy="0.00929300990970133" iyz="0.0" izz="0.00957902612033654"/>
+      <mass value="2.0138E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link4.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_FixedBase">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/robotBase.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="5.0E-4" ixy="0.0" ixz="0.0" iyy="5.0E-4" iyz="0.0" izz="5.0E-4"/>
+      <mass value="3.6832E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/robotBase.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_Link2">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link2.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.0521692170047944" ixy="0.0" ixz="0.0" iyy="0.0042331111850977" iyz="0.0" izz="0.0534425693052013"/>
+      <mass value="3.212E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link2.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_Link5">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link5.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.00236252846105637" ixy="0.0" ixz="0.0" iyy="0.00141854396142661" iyz="0.0" izz="0.0025813096143987"/>
+      <mass value="1.4418E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link5.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_Link3">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link3.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.0113804888378926" ixy="0.0" ixz="0.0" iyy="0.00566536942404497" iyz="0.0" izz="0.0133950588482047"/>
+      <mass value="3.471E0"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link3.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <link name="LBR3R760iisy_Link6">
+    <collision>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link6.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </collision>
+    <inertial>
+      <inertia ixx="0.0014673917002994" ixy="0.0" ixz="0.0" iyy="0.00112131520678352" iyz="0.0" izz="0.00158160486913488"/>
+      <mass value="8.43E-1"/>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="LBR3R760iisy/mesh/link6.stl"/>
+      </geometry>
+      <origin rpy="-0.0 0.0 -0.0" xyz="0.0 0.0 0.0"/>
+    </visual>
+  </link>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint2_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint2_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint5_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint5_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint5">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint6_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint6_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint6">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint4_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint4_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint3_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint3_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <transmission name="trans_LBR3R760iisy_Urdf_Joint1_name">
+    <actuator name="LBR3R760iisy_Urdf_Joint1_name_motor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+    <joint name="Joint1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <type>transmission_interface/SimpleTransmission</type>
+  </transmission>
+  <link name="base_link"/>
+
+    <!-- ============================================================ GRIPPER ============================================================ -->
+
+  <joint name="LBR3R760iisy_gripper_connector" type="fixed">
+    <child link="robotiq_85_base_link"/>
+    <parent link="LBR3R760iisy_Link6"/>
+    <origin
+      xyz="0 0 -0.15"
+      rpy="0 3.14 3.14" />
+  </joint>
+
+  <link
+    name="robotiq_85_base_link">
+    <inertial>
+      <origin
+        xyz="0.00021987 -2.3546E-10 0.030163"
+        rpy="0 0 0" />
+      <mass
+        value="0.30915" />
+      <inertia
+        ixx="0.00028972"
+        ixy="-5.7879E-10"
+        ixz="-1.8543E-06"
+        iyy="0.00030737"
+        iyz="1.682E-12"
+        izz="0.00019914" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/robotiq_85_base_link_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/robotiq_85_base_link_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_outer_knuckle">
+    <inertial>
+      <origin
+        xyz="0.0178331863169983 3.68915177224286E-11 0.0021442477325704"
+        rpy="0 0 0" />
+      <mass
+        value="0.00684838849434396" />
+      <inertia
+        ixx="2.66832029033166E-07"
+        ixy="1.66142314639824E-15"
+        ixz="1.45945633322873E-07"
+        iyy="1.3889233257419E-06"
+        iyz="2.82951161241588E-15"
+        izz="1.26603336914415E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_knuckle_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_knuckle_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="finger_joint"
+    type="revolute">
+    <origin
+      xyz="0.0306011444260539 0 0.0627920162695395"
+      rpy="0 0 0" />
+    <parent
+      link="robotiq_85_base_link" />
+    <child
+      link="left_outer_knuckle" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+	    lower="-0.876"
+      upper="0.876"
+      velocity="2.0"
+      effort="1000" />
+  </joint>
+  <link
+    name="left_outer_finger">
+    <inertial>
+      <origin
+        xyz="0.00131451599174296 2.88942057994543E-15 0.0215404163180413"
+        rpy="0 0 0" />
+      <mass
+        value="0.0273093985570947" />
+      <inertia
+        ixx="8.51629628283022E-06"
+        ixy="2.58174336207405E-19"
+        ixz="3.83829504344079E-07"
+        iyy="6.9133328065108E-06"
+        iyz="-7.58589926143789E-19"
+        izz="2.25006832221981E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_finger_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_finger_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_outer_finger_joint"
+    type="fixed">
+    <origin
+      xyz="0.0316910442266543 0 -0.00193396375724605"
+      rpy="0 0 0" />
+    <parent
+      link="left_outer_knuckle" />
+    <child
+      link="left_outer_finger" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="left_inner_knuckle">
+    <inertial>
+      <origin
+        xyz="0.017097546626628 -3.93808524389535E-10 0.0224918438201868"
+        rpy="0 0 0" />
+      <mass
+        value="0.0110930853895903" />
+      <inertia
+        ixx="4.23392770691541E-06"
+        ixy="5.748978936968E-15"
+        ixz="1.78855677119788E-06"
+        iyy="3.96548790524392E-06"
+        iyz="1.05464666369669E-14"
+        izz="3.24068002883007E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_knuckle_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_knuckle_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_inner_knuckle_joint"
+    type="revolute">
+    <origin
+      xyz="0.0127000000001501 0 0.0693074999999639"
+      rpy="0 0 0" />
+    <parent
+      link="robotiq_85_base_link" />
+    <child
+      link="left_inner_knuckle" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.8757"
+      upper="0.8757"
+      velocity="2.0"
+      effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="left_inner_finger">
+    <inertial>
+      <origin
+        xyz="0.0060275613594574 -6.29183141465421E-15 0.00669925693133241"
+        rpy="0 0 0" />
+      <mass
+        value="0.00724255346165745" />
+      <inertia
+        ixx="1.47824274053603E-06"
+        ixy="-3.94884463570303E-19"
+        ixz="-3.45268847648622E-07"
+        iyy="1.70064480838395E-06"
+        iyz="3.5059838910097E-19"
+        izz="4.77151336838364E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_finger_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_finger_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_inner_finger_joint"
+    type="revolute">
+    <origin
+      xyz="0.034585310861294 0 0.0454970193817975"
+      rpy="0 0 0" />
+    <parent
+      link="left_inner_knuckle" />
+    <child
+      link="left_inner_finger" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.8757"
+      upper="0.8757"
+      velocity="2.0"
+      effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="right_inner_knuckle">
+    <inertial>
+      <origin
+        xyz="0.0168606186773776 3.93808471820465E-10 0.0226699950793434"
+        rpy="0 0 0" />
+      <mass
+        value="0.0110930853895903" />
+      <inertia
+        ixx="4.27134775939882E-06"
+        ixy="-8.53568456728898E-15"
+        ixz="1.77774229944246E-06"
+        iyy="3.96548790524392E-06"
+        iyz="-8.45108024914164E-15"
+        izz="3.20325997634666E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_knuckle_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_knuckle_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_inner_knuckle_joint"
+    type="revolute">
+    <origin
+      xyz="-0.0126999999998499 0 0.0693075000000361"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="robotiq_85_base_link" />
+    <child
+      link="right_inner_knuckle" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.8757"
+      upper="0.8757"
+      velocity="2.0"
+      effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="right_inner_finger">
+    <inertial>
+      <origin
+        xyz="0.00602756228812038 -6.47284509480176E-15 0.00669925609578108"
+        rpy="0 0 0" />
+      <mass
+        value="0.00724255346165744" />
+      <inertia
+        ixx="1.47824283625957E-06"
+        ixy="-3.95952064019123E-19"
+        ixz="-3.45268708875543E-07"
+        iyy="1.70064480838394E-06"
+        iyz="3.55286507960029E-19"
+        izz="4.77151241114822E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_finger_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/inner_finger_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_inner_finger_joint"
+    type="revolute">
+    <origin
+      xyz="0.0341060475457406 0 0.0458573878541688"
+      rpy="0 0 0" />
+    <parent
+      link="right_inner_knuckle" />
+    <child
+      link="right_inner_finger" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-0.8757"
+      upper="0.8757"
+      velocity="2.0"
+      effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="right_outer_knuckle">
+    <inertial>
+      <origin
+        xyz="0.0178097074051638 3.60493211424024E-11 0.00233123458346721"
+        rpy="0 0 0" />
+      <mass
+        value="0.00684838849401352" />
+      <inertia
+        ixx="2.70004361573169E-07"
+        ixy="1.59579467624491E-15"
+        ixz="1.56396493788199E-07"
+        iyy="1.38892332558312E-06"
+        iyz="2.82357800318817E-15"
+        izz="1.26286103637978E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_knuckle_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_knuckle_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_outer_knuckle_joint"
+    type="revolute">
+    <origin
+      xyz="-0.0306011444258893 0 0.0627920162695395"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="robotiq_85_base_link" />
+    <child
+      link="right_outer_knuckle" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.8757"
+      upper="0.8757"
+      velocity="2.0"
+      effort="1000" />
+    <mimic 
+      joint="finger_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="right_outer_finger">
+    <inertial>
+      <origin
+        xyz="0.00108844269639009 -2.611488350845E-15 0.0215530225245502"
+        rpy="0 0 0" />
+      <mass
+        value="0.0273093985570947" />
+      <inertia
+        ixx="8.52366028592721E-06"
+        ixy="3.41683380899422E-19"
+        ixz="3.18003675694284E-07"
+        iyy="6.91333280651081E-06"
+        iyz="7.37726682706417E-19"
+        izz="2.24270431912283E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_finger_fine.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="LBR3R760iisy/mesh/outer_finger_coarse.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_outer_finger_joint"
+    type="fixed">
+    <origin
+      xyz="0.0317095909367246 0 -0.0016013564954687"
+      rpy="0 0 0" />
+    <parent
+      link="right_outer_knuckle" />
+    <child
+      link="right_outer_finger" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <!-- ============================================================ ROS2_CONTROL ============================================================ -->
+  <ros2_control name="LBR3R760iisy" type="system">
+    <hardware>
+        <plugin>chessbot/RobotSystem</plugin>
+    </hardware>
+    <joint name="Joint1">
+      <command_interface name="position">
+        <param name="min">{-3.2288591}</param>
+        <param name="max">{3.2288591}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="Joint2">
+      <command_interface name="position">
+        <param name="min">{-4.0142572796}</param>
+        <param name="max">{0.8726646}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="Joint3">
+      <command_interface name="position">
+        <param name="min">{-2.61799387799}</param>
+        <param name="max">{2.61799387799}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="Joint4">
+      <command_interface name="position">
+        <param name="min">{-3.05432619}</param>
+        <param name="max">{3.05432619}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="Joint5">
+      <command_interface name="position">
+        <param name="min">{-1.919862177}</param>
+        <param name="max">{1.919862177}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="Joint6">
+      <command_interface name="position">
+        <param name="min">{-3.839724354}</param>
+        <param name="max">{3.839724354}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+    <joint name="finger_joint">
+      <command_interface name="position">
+        <param name="min">{-0.876}</param>
+        <param name="max">{0.876}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+    </joint>
+  </ros2_control>
+
+</robot>

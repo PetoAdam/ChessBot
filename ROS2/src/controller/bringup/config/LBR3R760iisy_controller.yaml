@@ -1,0 +1,42 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 60  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    lbr3r760iisy_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    
+    gripper_controller:
+      type: chessbot/GripperController
+
+
+lbr3r760iisy_controller:
+  ros__parameters:
+    joints:
+      - Joint1
+      - Joint2
+      - Joint3
+      - Joint4
+      - Joint5
+      - Joint6
+
+    command_interfaces:
+      - position
+      - velocity
+
+    state_interfaces:
+      - position
+      - velocity
+
+gripper_controller:
+  ros__parameters:
+    joints:
+      - finger_joint
+
+    command_interfaces:
+      - position
+    
+    state_interfaces:
+      - position
