@@ -1,11 +1,11 @@
 # The service definition for a chess move
 
 # Request
-int8 start_x
-int8 start_y
-int8 end_x
-int8 end_y
-bool clash
+float32 from_x
+float32 from_y
+float32 to_x
+float32 to_y
+bool is_clash
 #string piece  # 'knight', 'pawn', etc.
 
 ---

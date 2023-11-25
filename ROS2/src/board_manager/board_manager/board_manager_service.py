@@ -2,11 +2,11 @@
 
 import rclpy
 from rclpy.node import Node
-from board_manager.srv import ChessMove
+from rclpy.executors import MultiThreadedExecutor
+from chess_move_srv.srv import ChessMove
 import chess
 from flask import Flask, request, jsonify
 import threading
-
 
 # Flask App Setup
 app = Flask(__name__)
@@ -16,11 +16,10 @@ board = chess.Board()
 class BoardManagerService(Node):
     def __init__(self):
         super().__init__('board_manager_service')
+        self.client = self.create_client(ChessMove, 'process_chess_move')
 
     def convert_to_real_world_coordinates(self, from_square, to_square):
         square_size = 0.5 / 8  # 0.5 meters divided by 8 squares
-
-        # Origin of the chessboard in the simulation world
         origin_x = 0.4  # X-coordinate of the bottom-left corner of the chessboard
         origin_y = 0.0  # Y-coordinate of the bottom-left corner of the chessboard
 
@@ -37,8 +36,7 @@ class BoardManagerService(Node):
         return from_coordinates + to_coordinates
 
     def send_move_to_motion_planner(self, from_square, to_square, is_clash):
-        client = self.create_client(ChessMove, 'process_chess_move')
-        while not client.wait_for_service(timeout_sec=1.0):
+        while not self.client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('Waiting for motion planner service...')
 
         req = ChessMove.Request()
@@ -46,9 +44,11 @@ class BoardManagerService(Node):
         req.from_x, req.from_y, req.to_x, req.to_y = coordinates
         req.is_clash = is_clash
 
-        future = client.call_async(req)
-        rclpy.spin_until_future_complete(self, future)
-        return future.result()
+        return self.client.call_async(req)
+
+@app.route('/board', methods=['GET'])
+def get_board_state():
+    return jsonify({'board': board.fen()})
 
 @app.route('/move', methods=['GET'])
 def move_piece():
@@ -59,7 +59,9 @@ def move_piece():
 
     if move in board.legal_moves:
         board.push(move)
-        response = board_manager.send_move_to_motion_planner(from_square, to_square, is_clash)
+        future = board_manager.send_move_to_motion_planner(from_square, to_square, is_clash)
+        rclpy.spin_until_future_complete(board_manager, future)
+        response = future.result()
 
         if response.success:
             return jsonify({'success': True, 'board': board.fen(), 'message': response.message})
@@ -76,10 +78,20 @@ def main(args=None):
     global board_manager
     board_manager = BoardManagerService()
 
+    executor = MultiThreadedExecutor()
+    executor.add_node(board_manager)
+
     flask_thread = threading.Thread(target=run_flask_app, daemon=True)
     flask_thread.start()
 
-    rclpy.spin(board_manager)
+    try:
+        executor.spin()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        executor.shutdown()
+        board_manager.destroy_node()
+
     rclpy.shutdown()
 
 if __name__ == '__main__':
