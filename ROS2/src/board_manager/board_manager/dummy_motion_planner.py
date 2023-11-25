@@ -10,7 +10,7 @@ class DummyMotionPlanner(Node):
         self.service = self.create_service(ChessMove, 'process_chess_move', self.process_chess_move_callback)
 
     def process_chess_move_callback(self, request, response):
-        self.get_logger().info('Received move request, sending dummy response...')
+        self.get_logger().info(f'Received move request, sending dummy response...{request}')
         response.success = True
         response.message = "Move processed successfully by dummy motion planner"
         return response
