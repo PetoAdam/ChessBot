@@ -5,6 +5,7 @@ int8 start_x
 int8 start_y
 int8 end_x
 int8 end_y
+bool clash
 #string piece  # 'knight', 'pawn', etc.
 
 ---
