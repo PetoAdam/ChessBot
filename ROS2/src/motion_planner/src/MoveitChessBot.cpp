@@ -200,6 +200,12 @@ int main(int argc, char * argv[])
   RCLCPP_INFO(node->get_logger(),"Ready for commands");
 
   // get it somehow to not shotdown
+  RCLCPP_INFO(node->get_logger(),"Press a key, to exit");
+  do
+  {
+  } while(std::cin.get() != '\n');
+  
+  
 
   // Shutdown ROS
   rclcpp::shutdown();
