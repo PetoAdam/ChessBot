@@ -9,6 +9,7 @@ This repository contains the software stack for a KUKA LBR3R760iisy robot design
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Contributing](#contributing)
 
 ## Introduction
@@ -25,11 +26,15 @@ Key components of this project:
 
 Before you begin, ensure you have the following prerequisites:
 
-- [ROS 2](https://index.ros.org/doc/ros2/Installation/): Install ROS 2 Humble according to your system's requirements.
-- [Webots](https://cyberbotics.com/): Download and install Webots, as it's the simulation environment used for the project.
-- A system with the necessary hardware requirements to run the simulation.
+1. [ROS 2](https://index.ros.org/doc/ros2/Installation/): Install ROS 2 Humble according to your system's requirements.
 
-    Note: You can use the [install_dependencies.sh](install_dependencies.sh) script to install all the neccessary dependencies for Ubuntu. (TODO)
+2. [Webots](https://cyberbotics.com/): Download and install Webots, as it's the simulation environment used for the project. The project uses Webots R2023b.
+
+3. All the packages defined in install_apt_dependencies. If you run Ubuntu 22.04, run ```sudo ./dependencies/install_apt_dependencies.sh```. If you have a different Linux distribution or package manager, make sure to download the neccessary packages manually.
+
+4. Python3.10+ with the required pip packages defined in pip_requirements.txt. To install all of them, run ```pip3 install -r dependencies/pip_requirements.txt```.
+
+5. A system with the necessary hardware requirements to run the simulation.
 
 ## Installation
 
