@@ -11,7 +11,9 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/config', ['config/piece_heights.yaml'])
+        ('share/' + package_name + '/config', ['config/piece_heights.yaml']),
+        ('share/' + package_name + '/config', ['config/board_full.yaml']),
+        ('share/' + package_name + '/config', ['config/board_custom.yaml'])
         #('share/' + package_name + '/srv', ['srv/ChessMove.srv']),  # Include service definitions
         # If you have any other data files like launch files, include them here as well
     ],
