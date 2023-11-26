@@ -35,12 +35,11 @@ def move_piece():
     is_clash = board.is_capture(move)
 
     if move in board.legal_moves:
-        board.push(move)
         future = board_manager.send_move_to_motion_planner(from_square, to_square, is_clash)
         rclpy.spin_until_future_complete(board_manager, future)
         response = future.result()
-
         if response.success:
+            board.push(move)
             return jsonify({'success': True, 'board': board.fen(), 'message': response.message})
         else:
             return jsonify({'success': False, 'message': response.message})
