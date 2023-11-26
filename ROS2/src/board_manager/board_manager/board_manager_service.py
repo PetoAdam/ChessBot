@@ -7,17 +7,17 @@ from chess_move_srv.srv import ChessMove
 import chess
 from flask import Flask, request, jsonify
 import threading
+import os
+import yaml
+from ament_index_python.packages import get_package_share_directory
 
-# Define piece heights
-class PieceHeights:
-    heights = {
-        'K': 0.1,  # Height for King
-        'Q': 0.09, # Height for Queen
-        'R': 0.08, # Height for Rook
-        'N': 0.07, # Height for Knight
-        'B': 0.06, # Height for Bishop
-        'P': 0.05, # Height for Pawn
-    }
+def load_piece_heights(file_path):
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
+
+package_share_directory = get_package_share_directory('board_manager')
+yaml_path = os.path.join(package_share_directory, 'config', 'piece_heights.yaml')
+piece_heights = load_piece_heights(yaml_path)
 
 # Flask App Setup
 app = Flask(__name__)
@@ -69,10 +69,10 @@ class BoardManagerService(Node):
 
         # Determine the z-coordinate based on the piece at the to_square
         z = 0.0  # Default height
-        piece = board.piece_at(chess.SQUARE_NAMES.index(to_square))
+        piece = board.piece_at(chess.SQUARE_NAMES.index(from_square))
         if piece:
             piece_symbol = piece.symbol().upper()
-            z = PieceHeights.heights.get(piece_symbol, z)
+            z = piece_heights.get(piece_symbol, z)
         else:
             self.get_logger().info(f"No piece on {to_square}, using default height")
 
