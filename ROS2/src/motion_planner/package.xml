@@ -15,7 +15,7 @@
   <depend>rclcpp</depend>
   <depend>moveit_visual_tools</depend>
   <depend>moveit_configs_utils</depend>
-  <depend>kuka_driver_interfaces</depend>
+  <depend>chess_move_srv</depend>
 
   <exec_depend>ros2_controllers</exec_depend>
   <exec_depend>moveit</exec_depend>

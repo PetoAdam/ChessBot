@@ -16,46 +16,159 @@
 
 #include <memory>
 
-#include "moveit_example.h"
+#include "moveit_example.hpp"
+#include "chess_move_srv/srv/chess_move.hpp"
 
 class ChessBot : public MoveitExample
 {
 public:
-  void WaitForChessCommand()
+  void MoveInitPosition()
   {
-    // get new poses
-
-    // Go to pickup
-    Eigen::Isometry3d pose = Eigen::Isometry3d(
-      Eigen::Translation3d(
-        0.3 + i * 0.1, j * 0.1 - 0.1,
-        0.35 - 0.1 * k) *
-      Eigen::Quaterniond(0, 1, 0, 0));
-    auto planned_trajectory =
-      planToPointUntilSuccess(pose, "ompl", "RRTConnectkConfigDefault");
-    if (planned_trajectory != nullptr) {
-      move_group_interface_->execute(*planned_trajectory);
-    } else {
-      RCLCPP_ERROR(LOGGER, "Planning failed");
-    }
-
-    // Attach object
-    AttachObject(object_name);
-
-    // Drop off to -0.3, 0.0, 0.35 pointing down
-    Eigen::Isometry3d dropoff_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(-0.3, 0.0, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+    Eigen::Isometry3d init_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(0.3, 0.0, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
     auto drop_trajectory = planToPointUntilSuccess(
-      dropoff_pose, "ompl",
+      init_pose, "ompl",
       "RRTConnectkConfigDefault");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
     } else {
       RCLCPP_ERROR(LOGGER, "Planning failed");
     }
+  }
 
-    // Detach
-    DetachAndRemoveObject(object_name);
+  void MoveClassPosition()
+  {
+    Eigen::Isometry3d init_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(0.3, 0.3, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+    auto drop_trajectory = planToPointUntilSuccess(
+      init_pose);
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+    }
+  }
+
+  bool NormalMoveCommand(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request)
+  {
+    Eigen::Isometry3d from_top_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(request->from_x, request->from_y, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+
+    Eigen::Isometry3d from_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(request->from_x, request->from_y, request->from_z) * Eigen::Quaterniond(0, 1, 0, 0));
+
+    Eigen::Isometry3d to_top_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(request->to_x, request->to_y, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+
+    Eigen::Isometry3d to_pose = Eigen::Isometry3d(
+      Eigen::Translation3d(request->to_x, request->to_y, request->to_z) * Eigen::Quaterniond(0, 1, 0, 0));
+
+    auto drop_trajectory = planToPoint(
+      from_top_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
+
+    auto drop_trajectory = planToPoint(
+      from_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    //gripper on
+
+    //wait bit
+
+    this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
+
+    auto drop_trajectory = planToPoint(
+      from_top_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    auto drop_trajectory = planToPoint(
+      to_top_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
+
+    auto drop_trajectory = planToPoint(
+      to_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    //gripper off
+
+    //wait bit
+
+    this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
+
+    auto drop_trajectory = planToPoint(
+      to_top_pose, "pilz_industrial_motion_planner", "LIN");
+    if (drop_trajectory != nullptr) {
+      move_group_interface_->execute(*drop_trajectory);
+    } else {
+      RCLCPP_ERROR(LOGGER, "Planning failed");
+      return false;
+    }
+
+    MoveInitPosition();
+    return true;
+  }
+
+  bool ClashMoveCommand(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request)
+  {
+
+  }
+
+  void ChessCommandService(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request,
+                           std::shared_ptr<chess_move_srv::srv::ChessMove::Response> response)
+  {
+    if(request->is_clash)
+    {
+      if(NormalMoveCommand(request))
+      {
+        response->set__success(true);
+      }
+      else
+      {
+        response->set__success(false);
+        MoveInitPosition();
+      }
+    }
+    else
+    {
+      if(ClashMoveCommand(request))
+      {
+        response->set__success(true);
+      }
+      else
+      {
+        response->set__success(false);
+        MoveInitPosition();
+      }
+    }
   }
 };
 
@@ -64,7 +177,7 @@ int main(int argc, char * argv[])
   // Setup
   // Initialize ROS and create the Node
   rclcpp::init(argc, argv);
-  auto const node = std::make_shared<Depalletizer>();
+  auto const node = std::make_shared<ChessBot>();
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node);
   std::thread(
@@ -78,9 +191,13 @@ int main(int argc, char * argv[])
   node->moveGroupInterface()->setMaxAccelerationScalingFactor(1.0);
   // Add robot platform
   node->addRobotPlatform();
-  node->addBreakPoint();
 
-  node->WaitForChessCommand();
+  rclcpp::Service<chess_move_srv::srv::ChessMove>::SharedPtr command_service = 
+    node->create_service<chess_move_srv::srv::ChessMove>("chess command", &ChessBot::ChessCommandService);
+
+  RCLCPP_INFO(node->get_logger(),"Ready for commands");
+
+  // get it somehow to not shotdown
 
   // Shutdown ROS
   rclcpp::shutdown();

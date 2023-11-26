@@ -17,16 +17,21 @@ find_package(rclcpp REQUIRED)
 find_package(moveit_visual_tools REQUIRED)
 find_package(rviz_visual_tools REQUIRED)
 find_package(moveit_msgs REQUIRED)
+#find_package(kuka_driver_interfaces REQUIRED)
+
+find_package(chess_move_srv REQUIRED)
 
 include_directories(include)
 
 
 add_executable(moveit_chess_bot src/MoveitChessBot.cpp)
 ament_target_dependencies(moveit_chess_bot
-  moveit_ros_planning_interface
   rclcpp
   rviz_visual_tools
   moveit_visual_tools
+  moveit_ros_planning_interface
+  chess_move_srv
+  #kuka_driver_interfaces
 )
 
 install(TARGETS moveit_chess_bot
