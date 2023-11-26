@@ -36,7 +36,7 @@ public:
     }
   }
 
-  void MoveClassPosition()
+  void MoveClashPosition()
   {
     Eigen::Isometry3d init_pose = Eigen::Isometry3d(
       Eigen::Translation3d(0.3, 0.3, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
@@ -74,7 +74,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
 
-    auto drop_trajectory = planToPoint(
+    drop_trajectory = planToPoint(
       from_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -89,7 +89,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
-    auto drop_trajectory = planToPoint(
+    drop_trajectory = planToPoint(
       from_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -98,7 +98,7 @@ public:
       return false;
     }
 
-    auto drop_trajectory = planToPoint(
+    drop_trajectory = planToPoint(
       to_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -109,7 +109,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
 
-    auto drop_trajectory = planToPoint(
+    drop_trajectory = planToPoint(
       to_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -124,7 +124,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
-    auto drop_trajectory = planToPoint(
+    drop_trajectory = planToPoint(
       to_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -137,47 +137,49 @@ public:
     return true;
   }
 
-  bool ClashMoveCommand(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request)
+  bool ClashMoveCommand(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> /*request*/)
   {
-
+    return false;
   }
+};
 
-  void ChessCommandService(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request,
-                           std::shared_ptr<chess_move_srv::srv::ChessMove::Response> response)
+std::shared_ptr<ChessBot> node;
+
+void ChessCommandService(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request,
+                          std::shared_ptr<chess_move_srv::srv::ChessMove::Response> response)
+{
+  if(request->is_clash)
   {
-    if(request->is_clash)
+    if(node->NormalMoveCommand(request))
     {
-      if(NormalMoveCommand(request))
-      {
-        response->set__success(true);
-      }
-      else
-      {
-        response->set__success(false);
-        MoveInitPosition();
-      }
+      response->set__success(true);
     }
     else
     {
-      if(ClashMoveCommand(request))
-      {
-        response->set__success(true);
-      }
-      else
-      {
-        response->set__success(false);
-        MoveInitPosition();
-      }
+      response->set__success(false);
+      node->MoveInitPosition();
     }
   }
-};
+  else
+  {
+    if(node->ClashMoveCommand(request))
+    {
+      response->set__success(true);
+    }
+    else
+    {
+      response->set__success(false);
+      node->MoveInitPosition();
+    }
+  }
+}
 
 int main(int argc, char * argv[])
 {
   // Setup
   // Initialize ROS and create the Node
   rclcpp::init(argc, argv);
-  auto const node = std::make_shared<ChessBot>();
+  node = std::make_shared<ChessBot>();
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node);
   std::thread(
@@ -193,7 +195,7 @@ int main(int argc, char * argv[])
   node->addRobotPlatform();
 
   rclcpp::Service<chess_move_srv::srv::ChessMove>::SharedPtr command_service = 
-    node->create_service<chess_move_srv::srv::ChessMove>("chess command", &ChessBot::ChessCommandService);
+    node->create_service<chess_move_srv::srv::ChessMove>("chess command", &ChessCommandService);
 
   RCLCPP_INFO(node->get_logger(),"Ready for commands");
 
