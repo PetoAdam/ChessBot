@@ -1,0 +1,17 @@
+# The service definition for a chess move
+
+# Request
+float32 from_x
+float32 from_y
+float32 from_z
+float32 to_x
+float32 to_y
+float32 to_z
+bool is_clash
+#string piece  # 'knight', 'pawn', etc.
+
+---
+
+# Response
+bool success  # indicate if the move was successful
+string message  # additional message, if any
