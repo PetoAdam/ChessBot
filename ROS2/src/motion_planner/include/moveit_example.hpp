@@ -1,17 +1,3 @@
-// Copyright 2022 Áron Svastits
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #ifndef IIQKA_MOVEIT_EXAMPLE__MOVEIT_EXAMPLE_HPP_
 #define IIQKA_MOVEIT_EXAMPLE__MOVEIT_EXAMPLE_HPP_
 
@@ -106,7 +92,7 @@ public:
       return nullptr;
     } else {
       RCLCPP_INFO(LOGGER, "Planning successful");
-      return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory);
+      return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory_);
     }
   }
 
@@ -122,7 +108,7 @@ public:
       return nullptr;
     } else {
       RCLCPP_INFO(LOGGER, "Planning successful");
-      return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory);
+      return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory_);
     }
   }
 
@@ -147,7 +133,7 @@ public:
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
     RCLCPP_INFO(LOGGER, "Planning successful after %li ms", duration.count());
-    return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory);
+    return std::make_shared<moveit_msgs::msg::RobotTrajectory>(plan.trajectory_);
   }
 
   void AddObject(const moveit_msgs::msg::CollisionObject & object)
@@ -341,7 +327,7 @@ protected:
   rclcpp::Publisher<moveit_msgs::msg::PlanningScene>::SharedPtr planning_scene_diff_publisher_;
   std::shared_ptr<moveit_visual_tools::MoveItVisualTools> moveit_visual_tools_;
   const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit_basic_plan");
-  const std::string PLANNING_GROUP = "manipulator";
+  const std::string PLANNING_GROUP = "arm";
 };
 
 #endif  // IIQKA_MOVEIT_EXAMPLE__MOVEIT_EXAMPLE_HPP_

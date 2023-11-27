@@ -1,17 +1,3 @@
-// Copyright 2022 Áron Svastits
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #include <math.h>
 
 #include <memory>
@@ -27,8 +13,7 @@ public:
     Eigen::Isometry3d init_pose = Eigen::Isometry3d(
       Eigen::Translation3d(0.3, 0.0, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
     auto drop_trajectory = planToPointUntilSuccess(
-      init_pose, "ompl",
-      "RRTConnectkConfigDefault");
+      init_pose);
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
     } else {
@@ -64,7 +49,7 @@ public:
       Eigen::Translation3d(request->to_x, request->to_y, request->to_z) * Eigen::Quaterniond(0, 1, 0, 0));
 
     auto drop_trajectory = planToPoint(
-      from_top_pose, "pilz_industrial_motion_planner", "LIN");
+      from_top_pose, "pilz_industrial_motion_planner", "PTP");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
     } else {
@@ -148,7 +133,7 @@ std::shared_ptr<ChessBot> node;
 void ChessCommandService(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request,
                           std::shared_ptr<chess_move_srv::srv::ChessMove::Response> response)
 {
-  if(request->is_clash)
+  if(!request->is_clash)
   {
     if(node->NormalMoveCommand(request))
     {
@@ -182,6 +167,7 @@ int main(int argc, char * argv[])
   node = std::make_shared<ChessBot>();
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node);
+  RCLCPP_INFO(node->get_logger(),"Starting rclcpp spinner...");
   std::thread(
     [&executor]()
     {executor.spin();})
@@ -192,15 +178,15 @@ int main(int argc, char * argv[])
   node->moveGroupInterface()->setMaxVelocityScalingFactor(1.0);
   node->moveGroupInterface()->setMaxAccelerationScalingFactor(1.0);
   // Add robot platform
-  node->addRobotPlatform();
+  //node->addRobotPlatform();
 
   rclcpp::Service<chess_move_srv::srv::ChessMove>::SharedPtr command_service = 
-    node->create_service<chess_move_srv::srv::ChessMove>("chess command", &ChessCommandService);
+    node->create_service<chess_move_srv::srv::ChessMove>("chess_command", &ChessCommandService);
 
   RCLCPP_INFO(node->get_logger(),"Ready for commands");
 
   // get it somehow to not shotdown
-  RCLCPP_INFO(node->get_logger(),"Press a key, to exit");
+  RCLCPP_INFO(node->get_logger(),"Press enter to exit");
   do
   {
   } while(std::cin.get() != '\n');

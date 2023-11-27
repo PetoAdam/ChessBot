@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: chessbot
+    relative_path: description/urdf/LBR3R760iisy.urdf
+  srdf:
+    relative_path: config/LBR3R760iisy.srdf
+  package_settings:
+    author_name: Adam Peto
+    author_email: peto.adam@yahoo.com
+    generated_timestamp: 1701045165
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
