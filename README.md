@@ -30,11 +30,13 @@ Before you begin, ensure you have the following prerequisites:
 
 2. [Webots](https://cyberbotics.com/): Download and install Webots, as it's the simulation environment used for the project. The project uses Webots R2023b.
 
-3. All the packages defined in install_apt_dependencies. If you run Ubuntu 22.04, run ```sudo ./dependencies/install_apt_dependencies.sh```. If you have a different Linux distribution or package manager, make sure to download the neccessary packages manually.
+3. [Move It! 2](https://moveit.ros.org/install-moveit2/binary/): Download and install Move It! 2, an open-source motion planning framework for ROS2, which this project uses.
 
-4. Python3.10+ with the required pip packages defined in pip_requirements.txt. To install all of them, run ```pip3 install -r dependencies/pip_requirements.txt```.
+4. All the packages defined in install_apt_dependencies. If you run Ubuntu 22.04, run ```sudo ./dependencies/install_apt_dependencies.sh```. If you have a different Linux distribution or package manager, make sure to download the neccessary packages manually.
 
-5. A system with the necessary hardware requirements to run the simulation.
+5. Python3.10+ with the required pip packages defined in pip_requirements.txt. To install all of them, run ```pip3 install -r dependencies/pip_requirements.txt```.
+
+6. A system with the necessary hardware requirements to run the simulation.
 
 ## Installation
 
