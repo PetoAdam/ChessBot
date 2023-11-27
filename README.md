@@ -74,7 +74,8 @@ ros2 launch chessbot lbr3r760iisy_controller.launch.py
 cd ROS2
 # make sure to have the ROS2 workspace built
 source install/setup.bash
-ros2 run board_manager board_manager_service
+ros2 run board_manager board_manager_service 
+# for a custom map: edit board_manager/config/board_custom.yaml rebuild and run ros2 run: board_manager board_manager_service board_custom.yaml
 
 # Start the frontend for chess
 cd ROS2
