@@ -56,7 +56,7 @@ RectangleArena {
   floorAppearance Parquetry {
     type "chequered"
   }
-  wallHeight 0.01
+  wallHeight 0.0000000001
 }
 
 LBR3R760iisy {
@@ -78,8 +78,8 @@ SolidBox {
 }
 
 SolidBox {
-  translation 0.3765625 0.0234375 0.1 
-  size 0.01875 0.01875 0.01875
+  translation 0.3765625 0.0234375 0.12 
+  size 0.01875 0.01875 0.0375
   appearance PBRAppearance {
     baseColor 0 0 0
     baseColorMap ImageTexture {
@@ -98,8 +98,8 @@ SolidBox {
 }
 
 SolidBox {
-  translation 0.4703125 0.0234375 0.1 
-  size  0.01875 0.01875 0.0375
+  translation 0.4703125 0.0234375 0.12 
+  size  0.01875 0.01875 0.05625
   appearance PBRAppearance {
     baseColor 0 0 0
     baseColorMap ImageTexture {

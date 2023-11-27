@@ -48,7 +48,7 @@ To install and run the chess-playing robot, follow these steps:
 2. Build the ros2 workspace:
     ```bash
     cd ROS2
-    colcon build
+    colcon build --symlink-install
     source install/setup.bash
     ```
     TODO: might need mixin for moveit
@@ -67,8 +67,11 @@ cd ROS2
 source install/setup.bash
 ros2 launch chessbot lbr3r760iisy_controller.launch.py
 
-# TODO:
 # Start inverse kinematics solver (MoveIt)
+cd ROS2
+# make sure to have the ROS2 workspace built
+source install/setup.bash
+ros2 launch moveit_chess_bot moveit_chess_bot.launch.py
 
 # Start the board_manager service
 cd ROS2
@@ -113,7 +116,7 @@ This should close the gripper.
 
 ### Motion planner
 
-TODO
+It can only be tested together with the simulaton and the ros2_control component.
 
 ### Board Manager and Frontend
 The board manager and the frontend can be tested completely separately from the other services, as there is a dummy motion planner, which simulates successful robot motion. To test it, run these scripts in separate terminals from the ROS2 directory (make sure that the ROS2 workspace is built, and sourced in every terminal):

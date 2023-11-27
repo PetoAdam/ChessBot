@@ -88,7 +88,7 @@ class BoardManagerService(Node):
             piece_symbol = piece.symbol().upper()
             z = piece_heights.get(piece_symbol, z)
         else:
-            self.get_logger().info(f"No piece on {to_square}, using default height")
+            self.get_logger().info(f"No piece on {from_square}, using default height")
 
         from_coordinates = square_to_coords(from_square, z)
         to_coordinates = square_to_coords(to_square, z)  # Using the same z-coordinate for to_square
