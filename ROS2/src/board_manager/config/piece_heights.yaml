@@ -1,6 +1,6 @@
 K: 0.1   # Height for King
 Q: 0.09  # Height for Queen
 R: 0.08  # Height for Rook
-N: 0.07  # Height for Knight
-B: 0.06  # Height for Bishop
-P: 0.05  # Height for Pawn
+N: 0.08  # Height for Knight
+B: 0.09  # Height for Bishop
+P: 0.07  # Height for Pawn

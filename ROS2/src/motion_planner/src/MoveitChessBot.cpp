@@ -8,8 +8,8 @@
 class ChessBot : public MoveitExample
 {
 public:
-  const float top_z = 0.3;
-  const float gripper_length = 0.2;
+  const float top_z = 0.26;
+  const float gripper_length = 0.15;
 
   void MoveInitPosition()
   {
