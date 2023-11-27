@@ -60,11 +60,11 @@ RectangleArena {
 }
 
 LBR3R760iisy {
-  translation 0 0 0.2
+  translation 0 0 0.1
 }
 SolidBox {
-  translation 0 0 0.1
-  size 0.2 0.2 0.2
+  translation 0 0 0.05
+  size 0.2 0.2 0.1
   appearance PBRAppearance {
     baseColor 0 0 0
     baseColorMap ImageTexture {

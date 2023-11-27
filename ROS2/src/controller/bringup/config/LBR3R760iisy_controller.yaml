@@ -5,14 +5,14 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    lbr3r760iisy_controller:
+    arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
     
     gripper_controller:
       type: chessbot/GripperController
 
 
-lbr3r760iisy_controller:
+arm_controller:
   ros__parameters:
     joints:
       - Joint1

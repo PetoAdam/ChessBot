@@ -66,7 +66,7 @@ def run_flask_app():
 class BoardManagerService(Node):
     def __init__(self):
         super().__init__('board_manager_service')
-        self.client = self.create_client(ChessMove, 'process_chess_move')
+        self.client = self.create_client(ChessMove, 'chess_command')
         self.board = board
 
     def convert_to_real_world_coordinates(self, from_square, to_square):
