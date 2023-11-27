@@ -34,7 +34,7 @@ piece_heights = load_piece_heights(yaml_path)
 
 # Flask App Setup
 app = Flask(__name__)
-#board = chess.Board()
+board = chess.Board()
 
 @app.route('/board', methods=['GET'])
 def get_board_state():
@@ -64,21 +64,21 @@ def run_flask_app():
 
 # ROS 2 Node for Chess Board Manager
 class BoardManagerService(Node):
-    def __init__(self):
+    def __init__(self, board):
         super().__init__('board_manager_service')
         self.client = self.create_client(ChessMove, 'chess_command')
         self.board = board
 
     def convert_to_real_world_coordinates(self, from_square, to_square):
-        square_size = 0.5 / 8  # 0.5 meters divided by 8 squares
-        origin_x = 0.4  # X-coordinate of the bottom-left corner of the chessboard
-        origin_y = 0.0  # Y-coordinate of the bottom-left corner of the chessboard
+        square_size = 0.375 / 8.0  # 0.5 meters divided by 8 squares
+        origin_x = 0.4 - square_size * 4 # X-coordinate of the bottom-left corner of the chessboard
+        origin_y = 0.0 - square_size * 4 # Y-coordinate of the bottom-left corner of the chessboard
 
         def square_to_coords(square, z_height):
             col = ord(square[0]) - ord('a')
             row = int(square[1]) - 1
-            x = origin_x + col * square_size
-            y = origin_y + row * square_size
+            x = origin_x + col * square_size + square_size / 2.0
+            y = origin_y + row * square_size + square_size / 2.0
             return [x, y, z_height]
 
         # Determine the z-coordinate based on the piece at the to_square
@@ -88,7 +88,7 @@ class BoardManagerService(Node):
             piece_symbol = piece.symbol().upper()
             z = piece_heights.get(piece_symbol, z)
         else:
-            self.get_logger().info(f"No piece on {to_square}, using default height")
+            self.get_logger().info(f"No piece on {from_square}, using default height")
 
         from_coordinates = square_to_coords(from_square, z)
         to_coordinates = square_to_coords(to_square, z)  # Using the same z-coordinate for to_square

@@ -4,12 +4,23 @@
 
 #include "moveit_example.hpp"
 #include "chess_move_srv/srv/chess_move.hpp"
+#include "std_msgs/msg/float64.hpp"
 
 class ChessBot : public MoveitExample
 {
 public:
   const float top_z = 0.3;
-  const float gripper_length = 0.2;
+  const float gripper_length = 0.18;
+
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr gripper_publisher;
+
+  void GripperCommand(double gripper_value)
+  {
+    std_msgs::msg::Float64 msg;
+    msg.data = gripper_value;
+    gripper_publisher->publish(msg);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));  // Wait for 1 second for the gripper
+  }
 
   void MoveInitPosition()
   {
@@ -72,8 +83,7 @@ public:
     }
 
     //gripper on
-
-    //wait bit
+    GripperCommand(0.6);
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
@@ -95,7 +105,11 @@ public:
       return false;
     }
 
-    this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
+    //gripper off
+    GripperCommand(0.4);
+
+    // Currently dropping pieces instead of placing them (placing also works)
+    /*this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
 
     drop_trajectory = planToPoint(
       to_pose, "pilz_industrial_motion_planner", "PTP");
@@ -105,10 +119,8 @@ public:
       RCLCPP_ERROR(LOGGER, "Planning failed");
       return false;
     }
-
-    //gripper off
-
-    //wait bit
+    */
+    
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
@@ -177,6 +189,10 @@ int main(int argc, char * argv[])
   .detach();
 
   node->initialize();
+  node->MoveInitPosition();
+
+  // Create a publisher for the gripper control
+  node->gripper_publisher = node->create_publisher<std_msgs::msg::Float64>("/gripper_controller/gripper_command", 10);
 
   node->moveGroupInterface()->setMaxVelocityScalingFactor(1.0);
   node->moveGroupInterface()->setMaxAccelerationScalingFactor(1.0);

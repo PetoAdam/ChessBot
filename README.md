@@ -30,11 +30,13 @@ Before you begin, ensure you have the following prerequisites:
 
 2. [Webots](https://cyberbotics.com/): Download and install Webots, as it's the simulation environment used for the project. The project uses Webots R2023b.
 
-3. All the packages defined in install_apt_dependencies. If you run Ubuntu 22.04, run ```sudo ./dependencies/install_apt_dependencies.sh```. If you have a different Linux distribution or package manager, make sure to download the neccessary packages manually.
+3. [Move It! 2](https://moveit.ros.org/install-moveit2/binary/): Download and install Move It! 2, an open-source motion planning framework for ROS2, which this project uses.
 
-4. Python3.10+ with the required pip packages defined in pip_requirements.txt. To install all of them, run ```pip3 install -r dependencies/pip_requirements.txt```.
+4. All the packages defined in install_apt_dependencies. If you run Ubuntu 22.04, run ```sudo ./dependencies/install_apt_dependencies.sh```. If you have a different Linux distribution or package manager, make sure to download the neccessary packages manually.
 
-5. A system with the necessary hardware requirements to run the simulation.
+5. Python3.10+ with the required pip packages defined in pip_requirements.txt. To install all of them, run ```pip3 install -r dependencies/pip_requirements.txt```.
+
+6. A system with the necessary hardware requirements to run the simulation.
 
 ## Installation
 
@@ -48,7 +50,7 @@ To install and run the chess-playing robot, follow these steps:
 2. Build the ros2 workspace:
     ```bash
     cd ROS2
-    colcon build
+    colcon build --symlink-install
     source install/setup.bash
     ```
     TODO: might need mixin for moveit
@@ -67,8 +69,11 @@ cd ROS2
 source install/setup.bash
 ros2 launch chessbot lbr3r760iisy_controller.launch.py
 
-# TODO:
 # Start inverse kinematics solver (MoveIt)
+cd ROS2
+# make sure to have the ROS2 workspace built
+source install/setup.bash
+ros2 launch moveit_chess_bot moveit_chess_bot.launch.py
 
 # Start the board_manager service
 cd ROS2
@@ -113,7 +118,7 @@ This should close the gripper.
 
 ### Motion planner
 
-TODO
+It can only be tested together with the simulaton and the ros2_control component.
 
 ### Board Manager and Frontend
 The board manager and the frontend can be tested completely separately from the other services, as there is a dummy motion planner, which simulates successful robot motion. To test it, run these scripts in separate terminals from the ROS2 directory (make sure that the ROS2 workspace is built, and sourced in every terminal):

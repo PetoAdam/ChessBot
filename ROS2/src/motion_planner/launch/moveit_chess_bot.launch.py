@@ -41,11 +41,17 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
         parameters=[moveit_config.to_dict()],
     )
+    
+    moveit_chess_bot = Node(
+        package="moveit_chess_bot",
+        executable="moveit_chess_bot",
+        output="screen",
+    )
 
     to_start = [
         #startup_launch,
         move_group_server,
-        
+        moveit_chess_bot,
     ]
 
     return to_start
