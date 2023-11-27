@@ -24,7 +24,7 @@ public:
   void MoveClashPosition()
   {
     Eigen::Isometry3d init_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(0.3, 0.3, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+      Eigen::Translation3d(0.3, 0.3, 0.35) * Eigen::Quaterniond(0, 0, 0, 1));
     auto drop_trajectory = planToPointUntilSuccess(
       init_pose);
     if (drop_trajectory != nullptr) {
@@ -37,18 +37,18 @@ public:
   bool NormalMoveCommand(const std::shared_ptr<chess_move_srv::srv::ChessMove::Request> request)
   {
     Eigen::Isometry3d from_top_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(request->from_x, request->from_y, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+      Eigen::Translation3d(request->from_x, request->from_y, 0.35) * Eigen::Quaterniond(0, 0, 0, 1));
 
     Eigen::Isometry3d from_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(request->from_x, request->from_y, request->from_z) * Eigen::Quaterniond(0, 1, 0, 0));
+      Eigen::Translation3d(request->from_x, request->from_y, request->from_z) * Eigen::Quaterniond(0, 0, 0, 1));
 
     Eigen::Isometry3d to_top_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(request->to_x, request->to_y, 0.35) * Eigen::Quaterniond(0, 1, 0, 0));
+      Eigen::Translation3d(request->to_x, request->to_y, 0.35) * Eigen::Quaterniond(0, 0, 0, 1));
 
     Eigen::Isometry3d to_pose = Eigen::Isometry3d(
-      Eigen::Translation3d(request->to_x, request->to_y, request->to_z) * Eigen::Quaterniond(0, 1, 0, 0));
+      Eigen::Translation3d(request->to_x, request->to_y, request->to_z) * Eigen::Quaterniond(0, 0, 0, 1));
 
-    auto drop_trajectory = planToPoint(
+    auto drop_trajectory = planToPointUntilSuccess(
       from_top_pose, "pilz_industrial_motion_planner", "PTP");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -59,7 +59,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
 
-    drop_trajectory = planToPoint(
+    drop_trajectory = planToPointUntilSuccess(
       from_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -74,7 +74,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
-    drop_trajectory = planToPoint(
+    drop_trajectory = planToPointUntilSuccess(
       from_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -83,7 +83,7 @@ public:
       return false;
     }
 
-    drop_trajectory = planToPoint(
+    drop_trajectory = planToPointUntilSuccess(
       to_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -94,7 +94,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(0.3);
 
-    drop_trajectory = planToPoint(
+    drop_trajectory = planToPointUntilSuccess(
       to_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
@@ -109,7 +109,7 @@ public:
 
     this->moveGroupInterface()->setMaxVelocityScalingFactor(1.0); 
 
-    drop_trajectory = planToPoint(
+    drop_trajectory = planToPointUntilSuccess(
       to_top_pose, "pilz_industrial_motion_planner", "LIN");
     if (drop_trajectory != nullptr) {
       move_group_interface_->execute(*drop_trajectory);
